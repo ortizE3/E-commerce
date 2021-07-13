@@ -1,11 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const shirtRoutes = require('./Routes/shirts-route')
+const shirtRoutes = require('./Routes/shirts-route');
 require('dotenv').config()
 
 mongoose.connect(process.env.URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     const app = express();
     app.use(express.json());
+    app.use(express.urlencoded({
+        extended: false
+    }));
     app.use('/', shirtRoutes);
 
     app.get('/', (req, res) => {

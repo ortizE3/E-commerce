@@ -5,9 +5,9 @@ const Shirt = require('../Models/shirts-model')
 
 module.exports.postShirts = async function postShirts(numberOfImages) {
     const url = `https://www2.hm.com/en_us/men/products/t-shirts-tank-tops.html?sort=stock&image-size=small&image=model&offset=0&page-size=${numberOfImages}`;
-    const dataExtracted = []
+    const dataExtracted = [];
 
-    rp(url).then((html) => {
+    await rp(url).then((html) => {
         const $ = cheerio.load(html);
 
         $('div[class=image-container] > a > .item-image').each((i, img) => {
@@ -22,7 +22,7 @@ module.exports.postShirts = async function postShirts(numberOfImages) {
 
     }).catch((error) => {
         console.log(error)
-    }).finally(() => {
-        return dataExtracted;
-    });
+    })
+    return dataExtracted;
+
 }
